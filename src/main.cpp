@@ -35,7 +35,7 @@ int main(int argc, char **argv)
   envir.addRobot(robot2);
 
   RangeSensor rSensor(robot,0.1,0,0,minRange);
-  // RangeSensor rSensor2(robot2,0.1,0,0,minRange);
+  RangeSensor rSensor2(robot2, 0.1, 0, 0, minRange);
   BearingSensor bSensor(robot2,0.1,0,0);
 
   // simulate 100 sec
@@ -49,7 +49,6 @@ int main(int argc, char **argv)
     // try to follow target
     robot.goTo(envir.target());
     robot2.moveWithSensor(Twist(0.4,0,0));
-
   }
 
   // plot trajectory

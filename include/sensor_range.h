@@ -24,8 +24,7 @@ class RangeSensor : public Sensor
     void update(const Pose &_p){
       Pose p1, p2;
       std::vector<double> distances;
-      // distances.push_back(std::numeric_limits<double>::max());
-      // use auto for getWAlls()
+      // TODO: use auto for getWAlls()
       for (int i = 0; i < envir_->getWalls().size(); i++)
       {
         p1 = envir_->getWalls()[i];
@@ -37,22 +36,19 @@ class RangeSensor : public Sensor
         double d = denom != 0 ? nom/denom :-1;
         if(d > 0){
           distances.push_back(d); 
-          cout << d << "  ";
         }
       }
       cout << endl;
-      //s_  = distances[min_positive(distances)];
       s_ = *std::min_element(distances.begin(), distances.end());
       cout << "Nearest wall is " << s_ << "m away" << endl;
     }
 
     // correct twist in sensor frame
     void correctTwist(Twist &_v) {
-      double g = .1;
+      double g = .3;
       if ( _v.vx > g * (s_ - minRange) ){
         _v.vx = g * (s_ - minRange);
       }
-
     }
   
   private:

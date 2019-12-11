@@ -43,7 +43,7 @@ void Environment::addRobot(Robot &_robot)
 }
 
 void copyToCoord(std::vector<double> &coord, const std::vector<double> &src,
-                 uint & offset)
+	unsigned int& offset)
 {
   std::copy(src.begin(), src.end(), coord.begin() + offset);
   offset += src.size();
@@ -56,7 +56,7 @@ void writeYAMLine(std::ofstream &out,
                   )
 {
   out << key << " [";
-  for(uint i = 0; i < data.size(); ++i)
+  for(unsigned int i = 0; i < data.size(); ++i)
   {
     out << data[i];
     if(i != data.size()-1)
@@ -69,20 +69,20 @@ void writeYAMLine(std::ofstream &out,
 // plots the trajectory in the given environment
 void Environment::plot()
 {
-  const uint size = x_hist.size();
-  const uint n_traj = 1 + robots_.size();
+  const unsigned int size = x_hist.size();
+  const unsigned int n_traj = 1 + robots_.size();
 
   const std::vector<std::string> colors{"m", "b","g","r","c"};
 
   std::vector<double> coord(size * n_traj * 2);
   std::vector<std::string> names(n_traj);
 
-  uint offset = 0;
+  unsigned int offset = 0;
   names[0] = "Target";
   copyToCoord(coord, x_hist, offset);
   copyToCoord(coord, y_hist, offset);
 
-  uint n=1;
+  unsigned int n=1;
   std::vector<double> x,y;
   for(auto &robot: robots_)
   {
@@ -101,9 +101,9 @@ void Environment::plot()
 
   out << "data: \n";
   std::vector<double> line(2*n_traj);
-  for(uint i = 0; i < size; ++i)
+  for(unsigned int i = 0; i < size; ++i)
   {
-    for(uint robot = 0; robot< n_traj; robot++)
+    for(unsigned int robot = 0; robot< n_traj; robot++)
     {
       line[2*robot] = coord[2*robot*size + i];
       line[2*robot+1] = coord[(2*robot+1)*size + i];

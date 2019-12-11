@@ -2,6 +2,7 @@
 #include <math.h>
 #include <robot.h>
 #include <sensor.h>
+#include <algorithm>
 
 using namespace arpro;
 using namespace std;
@@ -37,16 +38,15 @@ void Robot::moveXYT(double _vx, double _vy, double _omega)
 void Robot::rotateWheels(double _left, double _right)
 {
     if(!wheels_init_)
-        return; // throw an error ?
-    
-    //TODO:: move this to a static method
-    // if(abs(_left) > maxWheelSpeed || abs(_right) > maxWheelSpeed){
-    cout << "Velocity setpoint is too high" << endl;
+        return;
+
     double a = max(abs(_left)/maxWheelSpeed,abs(_right)/maxWheelSpeed);
     a = a < 1 ? 1 : a;
+    if(a == 1){
+      cout << "Velocity setpoint is too high" << endl;
+    }
     _left = _left/a;
     _right = _right/a;
-    // }
 
     double v = wheelRadius * (_left + _right) / 2;
     double w = wheelRadius * (_left - _right) / (2*baseDistance);
